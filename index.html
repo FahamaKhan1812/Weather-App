@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Weather App</title>
+</head>
+
+<body>
+
+    <section class="vh-100" style="background-color: #4B515D;">
+        <div class="container py-5 h-100">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark" type="button" id="searchForm">Search</button>
+            </form>
+            <div class="row d-flex justify-content-center align-items-center h-100" id="myDiv"></div>
+        </div>
+    </section>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+<script>
+
+    $.get('https://api.openweathermap.org/data/2.5/weather?q=karachi&appid=6c3eae06553f2ec779eefabef619dc42', data => {
+        console.log(data);
+        const icon = data.weather[0].icon;
+        localStorage.setItem("Karachi Weather", JSON.stringify(data))
+        var res = Object.entries(data);
+        // console.log(res);
+        res.forEach(element => {
+            console.log(element);
+            // console.log(element[0]);
+        });
+        var Div = `
+            <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${data.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(data.main.temp - 273.15).toFixed(2)}°C </h6>
+            <span class="small" style="color: #868B94" id="div">${data.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${data.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${data.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+    }).fail(err => {
+        console.log(err);
+        console.log("ERROR");
+        x = localStorage.getItem("Karachi Weather")
+        KWeather = JSON.parse(x)
+        const icon = KWeather.weather[0].icon;
+        console.log(KWeather);
+        var Div = `
+            <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${KWeather.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(KWeather.main.temp - 273.15).toFixed(2)} °C </h6>
+            <span class="small" style="color: #868B94" id="div">${KWeather.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${KWeather.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${KWeather.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+    });
+
+    $.get('https://api.openweathermap.org/data/2.5/weather?q=lahore&appid=6c3eae06553f2ec779eefabef619dc42', data => {
+        console.log(data);
+        localStorage.setItem("Lahore Weather", JSON.stringify(data))
+        const icon = data.weather[0].icon;
+        var Div = `
+        <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${data.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(data.main.temp - 273.15).toFixed(2)} °C </h6>
+            <span class="small" style="color: #868B94" id="div">${data.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${data.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${data.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+    }).fail(err => {
+        console.log(err);
+        console.log("ERROR");
+        x = localStorage.getItem("Lahore Weather")
+        lWeather = JSON.parse(x)
+        const icon = lWeather.weather[0].icon;
+        console.log(lWeather);
+        var Div = `
+        <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${lWeather.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(lWeather.main.temp - 273.15).toFixed(2)} °C </h6>
+            <span class="small" style="color: #868B94" id="div">${lWeather.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${lWeather.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${lWeather.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+
+    });
+
+    $.get('https://api.openweathermap.org/data/2.5/weather?q=quetta&appid=6c3eae06553f2ec779eefabef619dc42', data => {
+        console.log(data);
+        localStorage.setItem("Quetta Weather", JSON.stringify(data))
+        const icon = data.weather[0].icon;
+        var Div = `
+        <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${data.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(data.main.temp - 273.15).toFixed(2)} °C </h6>
+            <span class="small" style="color: #868B94" id="div">${data.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${data.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${data.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+
+    }).fail(err => {
+        console.log(err);
+        console.log("ERROR");
+        x = localStorage.getItem("Quetta Weather")
+        qWeather = JSON.parse(x)
+        const icon = qWeather.weather[0].icon;
+        console.log(qWeather);
+        var Div = `
+        <div class="col-md-8 col-lg-6 col-xl-4" id="div">
+            <div class="card" style="color: #4B515D; border-radius: 35px;" id="div">
+            <div class="card-body p-4" id="div">
+            <div class="d-flex">
+            <h6 class="flex-grow-1" id="div">${qWeather.name} </h6>
+            </div>
+            <div class="d-flex flex-column text-center mt-5 mb-4" id="div">
+            <h6 class="display-4 mb-0 font-weight-bold" style="color: #1C2331;" id="div"> ${(qWeather.main.temp - 273.15).toFixed(2)} °C </h6>
+            <span class="small" style="color: #868B94" id="div">${qWeather.weather[0].main}</span>
+            </div>
+            <div id="div"><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> 
+                <img src="https://openweathermap.org/img/wn/${icon}.png" alt="Weather icon">
+            <div class="d-flex align-items-center" id="div">
+            <div class="flex-grow-1" style="font-size: 1rem;" id="div">
+                <div id="div"><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                       Speed: ${qWeather.wind.speed} meter/sec </span></div>
+                <div id="div"><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">
+                        Humidity: ${qWeather.main.humidity} </span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`
+        $("#myDiv").append(Div);
+
+    });
+
+</script>
+
+
+</html>
